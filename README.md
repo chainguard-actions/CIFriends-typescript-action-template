@@ -1,0 +1,1 @@
+# CIFriends-typescript-action-template
