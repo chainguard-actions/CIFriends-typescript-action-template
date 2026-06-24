@@ -1,0 +1,22 @@
+name: Test basic usage (default greeting)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          who-to-greet: "World"
+      - name: Assert message output
+        env:
+          ACTUAL: ${{ steps.action.outputs.message }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ -z "$ACTUAL" ]; then
+            echo "FAIL: expected a non-empty message output"
+            exit 1
+          fi
+          echo "PASS: message output is '$ACTUAL'"
