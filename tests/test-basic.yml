@@ -10,7 +10,7 @@ jobs:
         uses: .
         with:
           who-to-greet: "World"
-      - name: Assert message output
+      - name: Assert message output contains greeting
         env:
           ACTUAL: ${{ steps.action.outputs.message }}
         run: |
@@ -19,4 +19,9 @@ jobs:
             echo "FAIL: expected a non-empty message output"
             exit 1
           fi
-          echo "PASS: message output is '$ACTUAL'"
+          if echo "$ACTUAL" | grep -qi "World"; then
+            echo "PASS: message contains 'World'"
+          else
+            echo "FAIL: expected message to contain 'World', got: $ACTUAL"
+            exit 1
+          fi

@@ -1,4 +1,4 @@
-name: Test custom greeting
+name: Test custom greeting input
 on:
   workflow_dispatch:
 jobs:
@@ -9,8 +9,8 @@ jobs:
       - id: action
         uses: .
         with:
-          who-to-greet: "GitHub Actions"
-      - name: Assert message output contains the custom name
+          who-to-greet: "Alice"
+      - name: Assert message output contains custom name
         env:
           ACTUAL: ${{ steps.action.outputs.message }}
         run: |
@@ -19,9 +19,9 @@ jobs:
             echo "FAIL: expected a non-empty message output"
             exit 1
           fi
-          if echo "$ACTUAL" | grep -qi "GitHub Actions"; then
-            echo "PASS: message contains 'GitHub Actions'"
+          if echo "$ACTUAL" | grep -qi "Alice"; then
+            echo "PASS: message contains 'Alice'"
           else
-            echo "FAIL: expected message to contain 'GitHub Actions', got: $ACTUAL"
+            echo "FAIL: expected message to contain 'Alice', got: $ACTUAL"
             exit 1
           fi
